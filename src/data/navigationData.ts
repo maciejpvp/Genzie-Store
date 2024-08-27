@@ -1,15 +1,15 @@
 export const gora: { title: string; href: string }[] = [
   {
     title: "Bluzy",
-    href: "/gora/bluzy",
+    href: "/category=Hoodie",
   },
   {
     title: "T-Shirty",
-    href: "/gora/koszulki",
+    href: "/category=T-Shirt",
   },
   {
     title: "Crop Topy",
-    href: "/gora/topy",
+    href: "/category=croptop",
   },
 ];
 
