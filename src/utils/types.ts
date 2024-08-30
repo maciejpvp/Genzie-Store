@@ -12,3 +12,11 @@ export type ProductResponseType = {
     items: Product[];
   };
 };
+
+export type OneProductResponseType = {
+  data: {
+    item: Product;
+  };
+  code: string;
+  message: string;
+};

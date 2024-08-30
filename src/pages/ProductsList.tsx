@@ -18,7 +18,7 @@ export const ProductsList = () => {
   console.log(items);
 
   return (
-    <ul>
+    <ul className="flex gap-10">
       {items?.map((item) => (
         <ProductItem item={item} />
       ))}

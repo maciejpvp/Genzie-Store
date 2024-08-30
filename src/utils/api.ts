@@ -1,6 +1,6 @@
 // api.ts
 import axios, { AxiosResponse } from "axios";
-import { ProductResponseType } from "./types";
+import { ProductResponseType, OneProductResponseType } from "./types";
 
 const apiClient = axios.create({
   baseURL: "http://localhost:8000/api/v1/", // Bazowy URL API
@@ -30,4 +30,11 @@ export const fetchItemsByCategory = async (
 ): Promise<ProductResponseType> => {
   const endpoint = `/items?${query}`;
   return getData<ProductResponseType>(endpoint);
+};
+
+export const fetchItem = async (
+  id: string
+): Promise<OneProductResponseType> => {
+  const endpoint = `/items/${id}`;
+  return getData<OneProductResponseType>(endpoint);
 };
