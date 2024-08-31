@@ -21,7 +21,7 @@ export const ProductItem = ({ item }: ProductItemProps) => {
 
   return (
     <motion.div
-      className="w-64 rounded-md p-2"
+      className="w-64 rounded-md p-2 lg:w-1/4"
       whileHover={{ scale: 1.1 }}
       onClick={() => navigate(`/item/${item._id}`)}
     >

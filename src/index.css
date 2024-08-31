@@ -7,6 +7,8 @@
 body {
   font-family: "Montserrat", sans-serif;
   background-color: #f9fafb;
+  width: 100lvw;
+  height: 100lvh;
 }
 
 input::-webkit-outer-spin-button,
