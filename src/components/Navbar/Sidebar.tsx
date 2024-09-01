@@ -1,13 +1,17 @@
 import { IoIosClose } from "react-icons/io";
-import { gora, gadzety, akcesoria, kolekcje } from "@/data/navigationData";
 import { motion } from "framer-motion";
-import { NavigationItemMobile } from "../NavigationItemMobile";
+import Accordion from "../Accordion";
+import { useState } from "react";
+import { Categories } from "./Sidebar/Categories";
+import { ProductFiltersMobile } from "./Sidebar/ProductFiltersMobile";
 
 type SidebarProps = {
   onClose: () => void;
 };
 
 export const Sidebar = ({ onClose }: SidebarProps) => {
+  const [showCategories, setShowCategories] = useState<boolean>(true);
+  const [showFilters, setShowFilters] = useState<boolean>(false);
   const sidebarVariants = {
     hidden: { x: "100%" },
     visible: {
@@ -29,61 +33,25 @@ export const Sidebar = ({ onClose }: SidebarProps) => {
         exit="exit"
         variants={sidebarVariants}
       >
-        <div className="flex justify-between items-center p-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold">Categories</h2>
+        <div className="flex justify-end items-center py-2 border-gray-200">
           <button onClick={onClose}>
-            <IoIosClose size={24} />
+            <IoIosClose size={34} />
           </button>
         </div>
-        <div className="flex flex-col p-4 space-y-4">
-          <NavigationItemMobile
-            title="GÓRA"
-            ItemsList={gora}
-            href="/gora"
-            onClose={onClose}
-          />
-          <NavigationItemMobile title="DÓŁ" href="/dol" onClose={onClose} />
-          <NavigationItemMobile
-            title="GADŻETY"
-            ItemsList={gadzety}
-            href="/gadzety"
-            onClose={onClose}
-          />
-          <NavigationItemMobile
-            title="AKCESORIA"
-            ItemsList={akcesoria}
-            href="/akcesoria"
-            onClose={onClose}
-          />
-          <NavigationItemMobile
-            title="KOLEKCJE"
-            ItemsList={kolekcje}
-            onClose={onClose}
-          />
-          <NavigationItemMobile
-            title="PREORDER"
-            href="/preorder"
-            className="text-pink-500"
-            onClose={onClose}
-          />
-          <NavigationItemMobile
-            title="NOWOŚCI"
-            href="/nowosci"
-            className="text-blue-600"
-            onClose={onClose}
-          />
-          <NavigationItemMobile
-            title="OSTATNIE SZTUKI"
-            href="/ostatnie-sztuki"
-            onClose={onClose}
-          />
-          <NavigationItemMobile
-            title="SALE"
-            href="/gora"
-            className="text-pink-500"
-            onClose={onClose}
-          />
-        </div>
+        <Accordion
+          title="Filters"
+          isOpen={showFilters}
+          setIsOpen={() => setShowFilters((prev) => !prev)}
+        >
+          <ProductFiltersMobile />
+        </Accordion>
+        <Accordion
+          title="Categories"
+          isOpen={showCategories}
+          setIsOpen={() => setShowCategories((prev) => !prev)}
+        >
+          <Categories onClose={onClose} />
+        </Accordion>
       </motion.div>
     </div>
   );

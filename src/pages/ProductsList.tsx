@@ -16,22 +16,9 @@ export const ProductsList = () => {
 
   const items: Product[] = data?.data.items ?? [];
 
-  const handleFilterChange = (filters: {
-    minPrice: number;
-    maxPrice: number;
-    sizes: string[];
-  }) => {
-    console.log("Selected Filters:", filters);
-  };
-
   return (
     <div className="flex flex-row justify-center">
-      <ProductFilters
-        minPrice={50}
-        maxPrice={1000}
-        sizes={["2XS", "XS", "S", "M", "L", "XL"]}
-        onFilterChange={handleFilterChange}
-      />
+      <ProductFilters />
       <ul className="flex justify-center gap-10 flex-row flex-wrap">
         {items?.map((item) => (
           <ProductItem item={item} />

@@ -1,50 +1,45 @@
-import { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Slider from "react-slider";
 import Accordion from "./Accordion";
+import Checkbox from "./Checkbox";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../store/store";
+import { setPriceRange, toggleSizeSelection } from "../store/filterSlice";
+import debounce from "lodash.debounce";
+import { minPrice, maxPrice, sizes } from "@/data/filtersData";
 
-type ProductFiltersProps = {
-  minPrice: number;
-  maxPrice: number;
-  sizes: string[];
-  onFilterChange: (filters: {
-    minPrice: number;
-    maxPrice: number;
-    sizes: string[];
-  }) => void;
-};
+export const ProductFilters = () => {
+  const dispatch = useDispatch();
+  const [priceRange, setPriceRangeSlider] = useState<number[]>([
+    minPrice,
+    maxPrice,
+  ]);
 
-export const ProductFilters = ({
-  minPrice,
-  maxPrice,
-  sizes,
-  onFilterChange,
-}: ProductFiltersProps) => {
-  const [priceRange, setPriceRange] = useState([minPrice, maxPrice]);
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
-  const [priceFilter, setPriceFilter] = useState<boolean>(true);
-  const [sizeFilter, setSizeFilter] = useState<boolean>(true);
+  const selectedSizes = useSelector(
+    (state: RootState) => state.filters.selectedSizes
+  );
+
+  const [priceFilter, setPriceFilter] = React.useState(true);
+  const [sizeFilter, setSizeFilter] = React.useState(true);
+
+  const debouncedPriceChange = useMemo(
+    () =>
+      debounce((values: number[]) => {
+        dispatch(setPriceRange(values));
+      }, 400),
+    [dispatch]
+  );
 
   const handlePriceChange = (values: number[]) => {
-    setPriceRange(values);
-    onFilterChange({
-      minPrice: values[0],
-      maxPrice: values[1],
-      sizes: selectedSizes,
-    });
+    debouncedPriceChange(values);
+  };
+
+  const handleSliderChange = (values: number[]) => {
+    setPriceRangeSlider(values);
   };
 
   const handleSizeChange = (size: string) => {
-    setSelectedSizes((prevSizes) => {
-      const newSizes = prevSizes.includes(size)
-        ? prevSizes.filter((s) => s !== size)
-        : [...prevSizes, size];
-      onFilterChange({
-        minPrice: priceRange[0],
-        maxPrice: priceRange[1],
-        sizes: newSizes,
-      });
-      return newSizes;
-    });
+    dispatch(toggleSizeSelection(size));
   };
 
   return (
@@ -60,8 +55,9 @@ export const ProductFilters = ({
           <Slider
             min={minPrice}
             max={maxPrice}
-            value={priceRange}
-            onChange={handlePriceChange}
+            defaultValue={[minPrice, maxPrice]}
+            onChange={handleSliderChange}
+            onAfterChange={handlePriceChange}
             renderTrack={(props) => (
               <div {...props} className="bg-gray-300 h-2 rounded-full" />
             )}
@@ -91,11 +87,9 @@ export const ProductFilters = ({
                 key={size}
                 className="flex items-center text-sm text-black"
               >
-                <input
-                  type="checkbox"
-                  checked={selectedSizes.includes(size)}
-                  onChange={() => handleSizeChange(size)}
-                  className="form-checkbox h-4 w-4 text-black"
+                <Checkbox
+                  isChecked={selectedSizes.includes(size)}
+                  setIsChecked={() => handleSizeChange(size)}
                 />
                 <span className="ml-2">{size}</span>
               </label>
