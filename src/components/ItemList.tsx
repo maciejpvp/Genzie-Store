@@ -9,6 +9,7 @@ type ListItemProps = {
 };
 
 export const ItemList = ({ className, title, href }: ListItemProps) => {
+  console.log(href);
   return (
     <li>
       <NavigationMenuLink>
@@ -17,7 +18,7 @@ export const ItemList = ({ className, title, href }: ListItemProps) => {
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
             className
           )}
-          to={href}
+          to={{ pathname: "/list", search: `?category=${href}` }}
         >
           <h1 className="text-sm font-medium leading-none">{title}</h1>
         </Link>

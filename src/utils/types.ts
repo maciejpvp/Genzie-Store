@@ -5,6 +5,7 @@ export type Product = {
   price: number;
   category: string[];
   images: string[];
+  stock: number[];
 };
 
 export type ProductResponseType = {

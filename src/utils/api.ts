@@ -28,7 +28,7 @@ export const getData = async <T>(
 export const fetchItemsByCategory = async (
   query: string
 ): Promise<ProductResponseType> => {
-  const endpoint = `/items?${query}`;
+  const endpoint = `/items${query}`;
   return getData<ProductResponseType>(endpoint);
 };
 

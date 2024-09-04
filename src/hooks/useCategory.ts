@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { fetchItemsByCategory } from "../utils/api";
 import { ProductResponseType } from "@/utils/types";
 
@@ -12,5 +12,6 @@ export const useCategory = ({ query }: UseCategoryProps) => {
     queryFn: () => fetchItemsByCategory(query),
     enabled: !!query,
     staleTime: 1000 * 60 * 5,
+    placeholderData: keepPreviousData,
   });
 };

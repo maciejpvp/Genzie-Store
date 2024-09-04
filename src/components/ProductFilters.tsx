@@ -1,45 +1,65 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import Slider from "react-slider";
 import Accordion from "./Accordion";
 import Checkbox from "./Checkbox";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store/store";
-import { setPriceRange, toggleSizeSelection } from "../store/filterSlice";
-import debounce from "lodash.debounce";
 import { minPrice, maxPrice, sizes } from "@/data/filtersData";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export const ProductFilters = () => {
-  const dispatch = useDispatch();
-  const [priceRange, setPriceRangeSlider] = useState<number[]>([
-    minPrice,
-    maxPrice,
-  ]);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get("category");
+  const minValue: number = parseInt(searchParams.get("price[gte]") || "0", 10);
 
-  const selectedSizes = useSelector(
-    (state: RootState) => state.filters.selectedSizes
-  );
+  const maxValue: number = parseInt(searchParams.get("price[lte]") || "0", 10);
+
+  const checkedSizes: string[] = searchParams.get("stock")?.split(",") || [];
+
+  console.log(checkedSizes);
+
+  const [sliderValues, setSliderValues] = useState<number[]>([
+    minValue,
+    maxValue,
+  ]);
 
   const [priceFilter, setPriceFilter] = React.useState(true);
   const [sizeFilter, setSizeFilter] = React.useState(true);
 
-  const debouncedPriceChange = useMemo(
-    () =>
-      debounce((values: number[]) => {
-        dispatch(setPriceRange(values));
-      }, 400),
-    [dispatch]
-  );
-
   const handlePriceChange = (values: number[]) => {
-    debouncedPriceChange(values);
+    navigate(
+      `?category=${category}&price[gte]=${values[0]}&price[lte]=${values[1]}&stock=${checkedSizes}`,
+      {
+        replace: false,
+      }
+    );
   };
 
-  const handleSliderChange = (values: number[]) => {
-    setPriceRangeSlider(values);
+  const handleSliderMove = (values: number[]) => {
+    setSliderValues([values[0], values[1]]);
   };
 
-  const handleSizeChange = (size: string) => {
-    dispatch(toggleSizeSelection(size));
+  const handleSizeChange = (size: string, isChecked: boolean) => {
+    let updatedSizes: string[] = [];
+    console.log(isChecked);
+
+    if (!isChecked) {
+      if (checkedSizes.length === 0 || checkedSizes[0] === "") {
+        updatedSizes = [size];
+      } else {
+        updatedSizes = [...checkedSizes, size];
+      }
+    } else {
+      updatedSizes = checkedSizes.filter((s) => s !== size);
+    }
+
+    console.log(updatedSizes);
+
+    navigate(
+      `?category=${category}&price[gte]=${minValue}&price[lte]=${maxValue}&stock=${updatedSizes}`,
+      {
+        replace: false,
+      }
+    );
   };
 
   return (
@@ -53,10 +73,13 @@ export const ProductFilters = () => {
           setIsOpen={() => setPriceFilter((prev) => !prev)}
         >
           <Slider
-            min={minPrice}
-            max={maxPrice}
-            defaultValue={[minPrice, maxPrice]}
-            onChange={handleSliderChange}
+            min={50}
+            max={1000}
+            defaultValue={[
+              minValue ? minValue : minPrice,
+              maxValue ? maxValue : maxPrice,
+            ]}
+            onChange={handleSliderMove}
             onAfterChange={handlePriceChange}
             renderTrack={(props) => (
               <div {...props} className="bg-gray-300 h-2 rounded-full" />
@@ -70,7 +93,7 @@ export const ProductFilters = () => {
             className="mb-7"
           />
           <div className=" text-black">
-            {priceRange[0]} zł - {priceRange[1]} zł
+            {sliderValues[0]} zł - {sliderValues[1]} zł
           </div>
         </Accordion>
       </div>
@@ -88,8 +111,10 @@ export const ProductFilters = () => {
                 className="flex items-center text-sm text-black"
               >
                 <Checkbox
-                  isChecked={selectedSizes.includes(size)}
-                  setIsChecked={() => handleSizeChange(size)}
+                  isChecked={checkedSizes.includes(size)}
+                  setIsChecked={() =>
+                    handleSizeChange(size, checkedSizes.includes(size))
+                  }
                 />
                 <span className="ml-2">{size}</span>
               </label>
