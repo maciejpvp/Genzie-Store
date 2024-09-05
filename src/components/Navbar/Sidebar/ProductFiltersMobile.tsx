@@ -1,17 +1,51 @@
 // import Checkbox from "@/components/Checkbox";
-import { Input } from "@/components/ui/input";
-import { sizes } from "@/data/filtersData";
-// import { useState } from "react";
+// import { sizes } from "@/data/filtersData";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { PriceFilterMobile } from "./PriceFilterMobile";
+import { SizeFilter } from "@/components/Filters/SizeFilter";
+// import Checkbox from "@/components/ui/Checkbox";
 
 export const ProductFiltersMobile = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get("category");
+  const minValue: number = parseInt(searchParams.get("price[gte]") || `0`, 10);
+
+  const maxValue: number = parseInt(
+    searchParams.get("price[lte]") || `1000`,
+    10
+  );
+
+  const checkedSizes: string[] = searchParams.get("stock")?.split(",") || [];
+
+  const handleMinPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
+    navigate(
+      `?category=${category}&price[gte]=${event.target.value}&price[lte]=${maxValue}&stock=${checkedSizes}`,
+      {
+        replace: false,
+      }
+    );
+  };
+  const handleMaxPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
+    navigate(
+      `?category=${category}&price[gte]=${minValue}&price[lte]=${event.target.value}&stock=${checkedSizes}`,
+      {
+        replace: false,
+      }
+    );
+  };
+
   return (
-    <>
-      <h1>Price</h1>
-      <div className="flex flex-row justify-between gap-10">
-        <Input type="number" placeholder="Min" />
-        <Input type="number" placeholder="Max" />
+    <div className="space-y-2">
+      <PriceFilterMobile
+        handleMinPrice={handleMinPrice}
+        handleMaxPrice={handleMaxPrice}
+        defaultValues={[minValue, maxValue]}
+      />
+      <div>
+        <h1>Rozmiar</h1>
+        <SizeFilter checkedSizes={checkedSizes} />
       </div>
-      {sizes.map((size) => size)}
-    </>
+    </div>
   );
 };

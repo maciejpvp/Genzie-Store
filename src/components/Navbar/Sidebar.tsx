@@ -1,6 +1,6 @@
 import { IoIosClose } from "react-icons/io";
 import { motion } from "framer-motion";
-import Accordion from "../Accordion";
+import Accordion from "../ui/Accordion";
 import { useState } from "react";
 import { Categories } from "./Sidebar/Categories";
 import { ProductFiltersMobile } from "./Sidebar/ProductFiltersMobile";

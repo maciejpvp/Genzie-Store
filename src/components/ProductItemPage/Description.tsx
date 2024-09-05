@@ -1,5 +1,5 @@
 import React from "react";
-import Markdown from "react-markdown"; // Pamiętaj o instalacji react-markdown: npm install react-markdown
+import Markdown from "react-markdown";
 
 interface Props {
   description: string;
@@ -7,16 +7,13 @@ interface Props {
 
 const Description: React.FC<Props> = ({ description }) => {
   const renderDescription = (description: string) => {
-    // Rozdziel tekst na wiersze
     const lines = description.split("\n").filter(Boolean);
 
-    // Znajdź indeks linii zawierającej "Szczegóły:"
     const detailsIndex = lines.findIndex((line) =>
       line.startsWith("Szczegóły:")
     );
 
-    // Podziel opis na część przed szczegółami i same szczegóły
-    const content = lines.slice(0, detailsIndex).join("\n\n"); // Złączenie linii z podwójnym enterem, aby Markdown tworzył nowe paragrafy
+    const content = lines.slice(0, detailsIndex).join("\n\n");
     const details = lines.slice(detailsIndex + 1);
 
     return (

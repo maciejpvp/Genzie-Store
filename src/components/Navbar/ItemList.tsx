@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { NavigationMenuLink } from "./ui/navigation-menu";
+import { NavigationMenuLink } from "../ui/navigation-menu";
 import { Link } from "react-router-dom";
 
 type ListItemProps = {

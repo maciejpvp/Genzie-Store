@@ -2,11 +2,11 @@ import { Product } from "@/utils/types";
 import { useItemDetails } from "../hooks/useItemDetails";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import SizeSelector from "@/components/SizeSelector";
+import SizeSelector from "@/components/ProductItemPage/SizeSelector";
 import { useState } from "react";
-import QuantitySelector from "@/components/QuantitySelector";
-import Description from "@/components/Description";
-import Accordion from "@/components/Accordion";
+import QuantitySelector from "@/components/ProductItemPage/QuantitySelector";
+import Description from "@/components/ProductItemPage/Description";
+import Accordion from "@/components/ui/Accordion";
 
 export const ProductItemPage = () => {
   const { id } = useParams();

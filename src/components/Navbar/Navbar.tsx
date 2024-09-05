@@ -1,5 +1,5 @@
-import { NavbarMobile } from "./Navbar/NavbarMobile";
-import { NavbarPC } from "./Navbar/NavbarPC";
+import { NavbarMobile } from "./NavbarMobile";
+import { NavbarPC } from "./NavbarPC";
 
 export const Navbar = () => {
   return (

@@ -1,8 +1,8 @@
 import { useLocation } from "react-router-dom";
 import { useCategory } from "../hooks/useCategory";
 import { Product } from "@/utils/types";
-import { ProductItem } from "@/components/ProductItem";
-import { ProductFilters } from "@/components/ProductFilters";
+import { ProductItem } from "@/components/ProductListPage/ProductItem";
+import { ProductFilters } from "@/components/ProductListPage/ProductFilters";
 import { BarLoader } from "react-spinners";
 import toast from "react-hot-toast";
 

@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion, useAnimation } from "framer-motion";
-import { Logo } from "../Logo";
-import { NavigationItem } from "../NavigationItem";
+import { Logo } from "./Logo";
+import { NavigationItem } from "./NavigationItem";
 import { IoIosCart, IoIosArrowRoundBack } from "react-icons/io";
 import { gora, gadzety, akcesoria, kolekcje } from "@/data/navigationData";
 import { useEffect } from "react";

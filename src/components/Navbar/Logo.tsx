@@ -1,4 +1,4 @@
-import GenzieLogo from "../assets/logo_genzie.svg";
+import GenzieLogo from "../../assets/logo_genzie.svg";
 
 export const Logo = () => {
   return (

@@ -1,4 +1,4 @@
-import { NavigationItemMobile } from "@/components/NavigationItemMobile";
+import { NavigationItemMobile } from "@/components/Navbar/NavigationItemMobile";
 import { gora, gadzety, akcesoria, kolekcje } from "@/data/navigationData";
 
 type CategoriesProps = {
