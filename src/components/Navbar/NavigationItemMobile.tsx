@@ -42,7 +42,11 @@ export const NavigationItemMobile: React.FC<NavItemProps> = ({
         <ul className="mt-2 space-y-2 pl-4">
           {ItemsList.map((item) => (
             <li key={item.title}>
-              <Link to={item.href} onClick={onClose} className="text-gray-600">
+              <Link
+                to={{ pathname: "/list", search: `?category=${item.href}` }}
+                onClick={onClose}
+                className="text-gray-600"
+              >
                 {item.title}
               </Link>
             </li>

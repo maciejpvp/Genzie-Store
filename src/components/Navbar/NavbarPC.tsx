@@ -1,16 +1,18 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { motion, useAnimation } from "framer-motion";
+import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { Logo } from "./Logo";
 import { NavigationItem } from "./NavigationItem";
-import { IoIosCart, IoIosArrowRoundBack } from "react-icons/io";
+import { IoIosArrowRoundBack } from "react-icons/io";
+import { PiShoppingCartLight, PiShoppingCartFill } from "react-icons/pi";
 import { gora, gadzety, akcesoria, kolekcje } from "@/data/navigationData";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const NavbarPC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const controls = useAnimation();
   const renderBackButton = location.pathname.startsWith("/item/");
+  const [showCart, setShowCart] = useState<boolean>(false);
 
   useEffect(() => {
     if (renderBackButton) {
@@ -26,7 +28,6 @@ export const NavbarPC = () => {
 
   return (
     <>
-      {/* <div className="flex w-full h-60 flex-row"> */}
       <div className="basis-1/5 text-6xl">
         <motion.button
           animate={controls}
@@ -62,10 +63,36 @@ export const NavbarPC = () => {
           <NavigationItem title="SALE" href="/gora" className="text-pink-500" />
         </div>
       </div>
-      <div className="basis-1/5 flex justify-end">
-        <IoIosCart />
+      <div className="flex justify-end items-start w-[19dvw]">
+        <button
+          className="text-3xl"
+          onClick={() => setShowCart((prev) => !prev)}
+        >
+          <AnimatePresence mode="wait">
+            {showCart ? (
+              <motion.div
+                key="filled"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.2 }}
+              >
+                <PiShoppingCartFill />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="light"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.2 }}
+              >
+                <PiShoppingCartLight />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </button>
       </div>
-      {/* </div> */}
     </>
   );
 };

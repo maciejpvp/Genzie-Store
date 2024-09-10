@@ -1,9 +1,13 @@
 // api.ts
 import axios, { AxiosResponse } from "axios";
-import { ProductResponseType, OneProductResponseType } from "./types";
+import {
+  ProductResponseType,
+  OneProductResponseType,
+  SignupResponseType,
+} from "./types";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:8000/api/v1/", // Bazowy URL API
+  baseURL: "http://192.168.1.15:8000/api/v1/",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
@@ -37,4 +41,17 @@ export const fetchItem = async (
 ): Promise<OneProductResponseType> => {
   const endpoint = `/items/${id}`;
   return getData<OneProductResponseType>(endpoint);
+};
+
+export const signup = async (
+  name: string,
+  email: string,
+  password: string
+): Promise<SignupResponseType> => {
+  const response = await apiClient.post("/users/signup", {
+    name,
+    email,
+    password,
+  });
+  return response.data;
 };

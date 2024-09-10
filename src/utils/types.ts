@@ -21,3 +21,9 @@ export type OneProductResponseType = {
   code: string;
   message: string;
 };
+
+export type SignupResponseType = {
+  status: string;
+  code: string;
+  message: string;
+};
