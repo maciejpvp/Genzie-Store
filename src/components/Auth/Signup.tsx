@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -6,8 +6,9 @@ import { useSignup } from "@/hooks/useSignup";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import InputField from "./FormInput";
+import { VerifyEmailDialog } from "./VerifyEmailDialog";
 
-export type FormData = {
+export type FormDataType = {
   name: string;
   email: string;
   password: string;
@@ -16,17 +17,18 @@ export type FormData = {
 
 const Signup: React.FC = () => {
   const { mutate, isPending } = useSignup();
+  const [showEmailDialog, setShowEmailDialog] = useState<boolean>(true);
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
     setError,
-  } = useForm<FormData>({
+  } = useForm<FormDataType>({
     mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<FormDataType> = (data) => {
     mutate(
       {
         name: data.name,
@@ -52,19 +54,27 @@ const Signup: React.FC = () => {
             toast.error("Something went wrong");
           }
         },
+        onSuccess: () => {
+          setShowEmailDialog((prev) => !prev);
+        },
       }
     );
   };
 
-  console.log(isPending);
-
   const password = watch("password");
+  const email = watch("email");
 
   return (
     <div className="h-max lg:h-[35dvh]">
+      <button onClick={() => setShowEmailDialog(true)}>123</button>
       <Card className="max-w-md mx-auto">
         <CardHeader>
           <CardTitle>Sign Up</CardTitle>
+          <VerifyEmailDialog
+            open={showEmailDialog}
+            setOpen={setShowEmailDialog}
+            email={email}
+          />
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>

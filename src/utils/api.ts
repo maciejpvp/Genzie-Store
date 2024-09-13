@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from "axios";
 import {
   ProductResponseType,
   OneProductResponseType,
-  SignupResponseType,
+  DefaultResponseType,
 } from "./types";
 
 const apiClient = axios.create({
@@ -47,9 +47,41 @@ export const signup = async (
   name: string,
   email: string,
   password: string
-): Promise<SignupResponseType> => {
+): Promise<DefaultResponseType> => {
   const response = await apiClient.post("/users/signup", {
     name,
+    email,
+    password,
+  });
+  return response.data;
+};
+
+export const verifyEmail = async (
+  email: string,
+  code: string
+): Promise<DefaultResponseType> => {
+  console.log("123123213");
+  const response = await apiClient.post("/users/verifyEmail", {
+    email,
+    code,
+  });
+  return response.data;
+};
+
+export const resentEmailVerifyCode = async (
+  email: string
+): Promise<DefaultResponseType> => {
+  const response = await apiClient.post("/users/resendVerifyEmailCode", {
+    email,
+  });
+  return response.data;
+};
+
+export const login = async (
+  email: string,
+  password: string
+): Promise<DefaultResponseType> => {
+  const response = await apiClient.post("/users/login", {
     email,
     password,
   });

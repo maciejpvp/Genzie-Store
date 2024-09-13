@@ -22,7 +22,7 @@ export type OneProductResponseType = {
   message: string;
 };
 
-export type SignupResponseType = {
+export type DefaultResponseType = {
   status: string;
   code: string;
   message: string;

@@ -1,16 +1,16 @@
 import React from "react";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
-import { FormData } from "./Signup";
+import { FormDataType } from "./Signup";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 type InputFieldProps = {
   label: string;
-  id: "name" | "email" | "password" | "passwordConfirm";
+  id: keyof FormDataType;
   type?: string;
   disabled?: boolean;
-  register: UseFormRegister<FormData>;
-  errors: FieldErrors<FormData>;
+  register: UseFormRegister<FormDataType>;
+  errors: FieldErrors<FormDataType>;
   validation?: object;
 };
 
