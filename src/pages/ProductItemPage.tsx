@@ -25,9 +25,9 @@ export const ProductItemPage = () => {
   const item: Product = data.data.item;
 
   return (
-    <div className="flex flex-col lg:flex-row justify-center">
+    <div className="flex flex-col lg:flex-row justify-center ">
       <motion.div
-        className="lg:w-2/4 w-full mb-8 lg:mb-0 flex justify-center"
+        className="lg:w-2/4 h-full mb-8 lg:mb-0 flex justify-center"
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
