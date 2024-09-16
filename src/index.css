@@ -20,7 +20,9 @@ input::-webkit-inner-spin-button {
 
 /* Firefox */
 input[type="number"] {
-  -moz-appearance: textfield;
+  appearance: textfield;
+  -moz-appearance: textfield; /* For Firefox */
+  -webkit-appearance: textfield; /* For Safari and Chrome */
 }
 
 @layer base {
