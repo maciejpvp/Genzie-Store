@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -24,9 +24,16 @@ const Signup: React.FC = () => {
     formState: { errors },
     watch,
     setError,
+    setFocus,
   } = useForm<FormDataType>({
     mode: "onChange",
   });
+
+  useEffect(() => {
+    setTimeout(() => {
+      setFocus("name");
+    }, 0);
+  }, [setFocus]);
 
   const onSubmit: SubmitHandler<FormDataType> = (data) => {
     mutate(

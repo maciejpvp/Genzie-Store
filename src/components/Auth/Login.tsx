@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -20,6 +20,7 @@ export const Login: React.FC = () => {
     handleSubmit,
     formState: { errors },
     setError,
+    setFocus,
   } = useForm<FormDataType>({
     mode: "onChange",
   });
@@ -29,6 +30,12 @@ export const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const isDisabled = !!Object.keys(errors).length || isPending;
+
+  useEffect(() => {
+    setTimeout(() => {
+      setFocus("email");
+    }, 0);
+  }, [setFocus]);
 
   const onSubmit: SubmitHandler<FormDataType> = (data) => {
     mutate(
