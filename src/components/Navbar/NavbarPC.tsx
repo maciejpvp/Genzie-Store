@@ -6,11 +6,15 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 import { PiShoppingCartLight, PiShoppingCartFill } from "react-icons/pi";
 import { gora, gadzety, akcesoria, kolekcje } from "@/data/navigationData";
 import { useEffect, useState } from "react";
+import { AppDispatch } from "@/store/store";
+import { useDispatch } from "react-redux";
+import { handleExit, resetComponent } from "@/store/productPageSlice";
 
 export const NavbarPC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const controls = useAnimation();
+  const dispatch: AppDispatch = useDispatch();
   const renderBackButton = location.pathname.startsWith("/item/");
   const [showCart, setShowCart] = useState<boolean>(false);
 
@@ -23,7 +27,13 @@ export const NavbarPC = () => {
   }, [renderBackButton, controls]);
 
   const handleGoBack = () => {
-    if (renderBackButton) navigate(-1);
+    if (renderBackButton) {
+      dispatch(handleExit());
+      setTimeout(() => {
+        navigate(-1);
+        dispatch(resetComponent());
+      }, 400);
+    }
   };
 
   return (

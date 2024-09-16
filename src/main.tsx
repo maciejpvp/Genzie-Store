@@ -8,7 +8,7 @@ import { ProductItemPage } from "./pages/ProductItemPage.tsx";
 import "./index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import store from "./store/store.ts";
+import { store } from "./store/store.ts";
 import { Provider } from "react-redux";
 import { Cart } from "./pages/Cart.tsx";
 import { AuthPage } from "./pages/AuthPage.tsx";
