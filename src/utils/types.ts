@@ -27,3 +27,16 @@ export type DefaultResponseType = {
   code: string;
   message: string;
 };
+
+export type LoginResponseType = {
+  status: string;
+  code: string;
+  message: string;
+  data: {
+    token: string;
+    user: {
+      email: string;
+      user: string;
+    };
+  };
+};

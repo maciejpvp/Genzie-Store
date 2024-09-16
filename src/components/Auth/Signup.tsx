@@ -17,7 +17,7 @@ export type FormDataType = {
 
 const Signup: React.FC = () => {
   const { mutate, isPending } = useSignup();
-  const [showEmailDialog, setShowEmailDialog] = useState<boolean>(true);
+  const [showEmailDialog, setShowEmailDialog] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -66,7 +66,6 @@ const Signup: React.FC = () => {
 
   return (
     <div className="h-max lg:h-[35dvh]">
-      <button onClick={() => setShowEmailDialog(true)}>123</button>
       <Card className="max-w-md mx-auto">
         <CardHeader>
           <CardTitle>Sign Up</CardTitle>

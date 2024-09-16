@@ -10,6 +10,7 @@ import { OtpInput } from "./OtpInput";
 import { useEffect, useState } from "react";
 import { useVerifyEmail } from "@/hooks/useVerifyEmail";
 import { useResentEmailVerify } from "../../hooks/useResentEmailVerify";
+import { useNavigate } from "react-router-dom";
 
 type VerifyEmailDialogProps = {
   open: boolean;
@@ -22,6 +23,7 @@ export const VerifyEmailDialog = ({
   setOpen,
   email,
 }: VerifyEmailDialogProps) => {
+  const navigate = useNavigate();
   const { mutate: mutateVerifyEmail } = useVerifyEmail();
   const { mutate: mutateResentEmail } = useResentEmailVerify();
   const [otp, setOtp] = useState<string>("");
@@ -53,12 +55,12 @@ export const VerifyEmailDialog = ({
             console.log(error);
           },
           onSuccess: () => {
-            console.log("success");
+            navigate("/auth/login");
           },
         }
       );
     }
-  }, [otp, email, mutateVerifyEmail]);
+  }, [otp, email, mutateVerifyEmail, navigate]);
 
   useEffect(() => {
     let timer: ReturnType<typeof setInterval>;

@@ -1,16 +1,19 @@
-// api.ts
 import axios, { AxiosResponse } from "axios";
 import {
   ProductResponseType,
   OneProductResponseType,
   DefaultResponseType,
+  LoginResponseType,
 } from "./types";
 
+const token = localStorage.getItem("token") || "";
+
 const apiClient = axios.create({
-  baseURL: "http://192.168.1.15:8000/api/v1/",
+  baseURL: "http://localhost:8000/api/v1/",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
   },
 });
 
@@ -80,7 +83,7 @@ export const resentEmailVerifyCode = async (
 export const login = async (
   email: string,
   password: string
-): Promise<DefaultResponseType> => {
+): Promise<LoginResponseType> => {
   const response = await apiClient.post("/users/login", {
     email,
     password,

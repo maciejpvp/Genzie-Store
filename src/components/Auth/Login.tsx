@@ -6,8 +6,13 @@ import InputField from "./FormInput";
 import { useLogin } from "@/hooks/useLogin";
 import { FormDataType } from "./Signup";
 import { AxiosError } from "axios";
-// import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 // import { DefaultResponseType } from "@/utils/types";
+
+const login = (token: string): void => {
+  localStorage.setItem("token", token);
+};
 
 export const Login: React.FC = () => {
   const {
@@ -21,7 +26,7 @@ export const Login: React.FC = () => {
 
   const { mutate, isPending } = useLogin();
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const isDisabled = !!Object.keys(errors).length || isPending;
 
@@ -45,8 +50,9 @@ export const Login: React.FC = () => {
           }
         },
         onSuccess: (data) => {
-          console.log(data);
-          // navigate("/list?category=Hoodie");
+          login(data.data.token);
+          toast.success("Login succesfully");
+          navigate("/list?category=Hoodie");
         },
       }
     );
