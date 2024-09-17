@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { AppDispatch } from "@/store/store";
 import { useDispatch } from "react-redux";
 import { handleExit, resetComponent } from "@/store/productPageSlice";
+import { AccountButton } from "./AccountButton";
 
 export const NavbarPC = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ export const NavbarPC = () => {
       setTimeout(() => {
         navigate(-1);
         dispatch(resetComponent());
-      }, 400);
+      }, 300);
     }
   };
 
@@ -73,7 +74,7 @@ export const NavbarPC = () => {
           <NavigationItem title="SALE" href="/gora" className="text-pink-500" />
         </div>
       </div>
-      <div className="flex justify-end items-start w-[19dvw]">
+      <div className="flex justify-end items-start space-x-2 my-2 mr-2 w-[19dvw]">
         <button
           className="text-3xl"
           onClick={() => setShowCart((prev) => !prev)}
@@ -102,6 +103,7 @@ export const NavbarPC = () => {
             )}
           </AnimatePresence>
         </button>
+        <AccountButton />
       </div>
     </>
   );

@@ -33,7 +33,8 @@ const Signup: React.FC = () => {
     setTimeout(() => {
       setFocus("name");
     }, 0);
-  }, [setFocus]);
+    //eslint-disable-next-line
+  }, []);
 
   const onSubmit: SubmitHandler<FormDataType> = (data) => {
     mutate(

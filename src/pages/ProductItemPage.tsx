@@ -39,7 +39,7 @@ export const ProductItemPage = () => {
               initial={{ opacity: 0, x: -100 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.3 }}
             >
               <img
                 crossOrigin="anonymous"
@@ -54,7 +54,7 @@ export const ProductItemPage = () => {
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 100 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.3 }}
             >
               <div className="flex flex-col gap-3 pb-16">
                 <h1 className="text-4xl text-gray-800">{item.name}</h1>

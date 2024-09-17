@@ -12,6 +12,10 @@ import { useNavigate } from "react-router-dom";
 
 const login = (token: string): void => {
   localStorage.setItem("token", token);
+  const tokenExpiresIn = new Date(
+    new Date().setDate(new Date().getDate() + 1)
+  ).getTime();
+  localStorage.setItem("tokenExpiresIn", `${tokenExpiresIn}`);
 };
 
 export const Login: React.FC = () => {
@@ -35,7 +39,8 @@ export const Login: React.FC = () => {
     setTimeout(() => {
       setFocus("email");
     }, 0);
-  }, [setFocus]);
+    //eslint-disable-next-line
+  }, []);
 
   const onSubmit: SubmitHandler<FormDataType> = (data) => {
     mutate(

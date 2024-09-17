@@ -1,6 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import { App } from "./App.tsx";
 import { Home } from "./pages/Home.tsx";
 import { ProductsList } from "./pages/ProductsList.tsx";
@@ -37,6 +41,10 @@ const router = createBrowserRouter([
         element: <Cart />,
       },
     ],
+  },
+  {
+    path: "/auth",
+    element: <Navigate to="/auth/signup" replace />,
   },
   {
     path: "/auth/:mode",
