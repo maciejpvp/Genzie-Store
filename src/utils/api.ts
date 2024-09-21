@@ -4,6 +4,7 @@ import {
   OneProductResponseType,
   DefaultResponseType,
   LoginResponseType,
+  CartResponse,
 } from "./types";
 
 const token = localStorage.getItem("token") || "";
@@ -88,5 +89,43 @@ export const login = async (
     email,
     password,
   });
+  return response.data;
+};
+
+export const addToCart = async (
+  itemId: string,
+  quantity: number,
+  size: string
+): Promise<DefaultResponseType> => {
+  const response = await apiClient.post(`/cart/${itemId}`, {
+    quantity,
+    size,
+  });
+  return response.data;
+};
+
+export const getCart = async (): Promise<CartResponse> => {
+  const response = await apiClient.get("/cart");
+  return response.data;
+};
+
+export const incCartItemQuantity = async (
+  id: string
+): Promise<DefaultResponseType> => {
+  const response = await apiClient.get(`/cart/inc/${id}`);
+  return response.data;
+};
+
+export const decCartItemQuantity = async (
+  id: string
+): Promise<DefaultResponseType> => {
+  const response = await apiClient.get(`/cart/dec/${id}`);
+  return response.data;
+};
+
+export const deleteFromCart = async (
+  id: string
+): Promise<DefaultResponseType> => {
+  const response = await apiClient.delete(`/cart/${id}`);
   return response.data;
 };

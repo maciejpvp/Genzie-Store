@@ -9,9 +9,11 @@ import Description from "@/components/ProductItemPage/Description";
 import Accordion from "@/components/ui/Accordion";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { useAddToCart } from "@/hooks/useAddtoCart";
 
 export const ProductItemPage = () => {
   const { id } = useParams();
+  const { mutate: mutateAddToCart } = useAddToCart();
   const [selectedSize, setSelectedSize] = useState<string>("M");
   const renderComponent = useSelector(
     (state: RootState) => state.productPage.renderComponent
@@ -28,6 +30,11 @@ export const ProductItemPage = () => {
     return <p>An error occurred: {error?.message || data?.message}</p>;
 
   const item: Product = data.data.item;
+
+  const handleAddToCart = () => {
+    if (!id) return;
+    mutateAddToCart({ itemId: id, quantity, size: selectedSize });
+  };
 
   return (
     <div className="flex flex-col lg:flex-row justify-center ">
@@ -71,6 +78,7 @@ export const ProductItemPage = () => {
                 />
                 <motion.button
                   className="mt-4 bg-zinc-800 text-white py-3 px-6 rounded-lg hover:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-800 focus:ring-opacity-50"
+                  onClick={handleAddToCart}
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
                 >

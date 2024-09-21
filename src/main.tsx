@@ -6,7 +6,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { App } from "./App.tsx";
-import { Home } from "./pages/Home.tsx";
+// import { Home } from "./pages/Home.tsx";
 import { ProductsList } from "./pages/ProductsList.tsx";
 import { ProductItemPage } from "./pages/ProductItemPage.tsx";
 import "./index.css";
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <Navigate to="list?category=Hoodie" replace />,
       },
       {
         path: "/list",
@@ -36,11 +36,11 @@ const router = createBrowserRouter([
         path: "/item/:id",
         element: <ProductItemPage />,
       },
-      {
-        path: "/cart",
-        element: <Cart />,
-      },
     ],
+  },
+  {
+    path: "/cart",
+    element: <Cart />,
   },
   {
     path: "/auth",

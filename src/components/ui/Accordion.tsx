@@ -1,11 +1,15 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 interface AccordionProps {
   title: string;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   children: React.ReactNode;
+  className?: string;
+  bold?: boolean;
+  insideClassName?: string;
 }
 
 const Accordion: React.FC<AccordionProps> = ({
@@ -13,14 +17,24 @@ const Accordion: React.FC<AccordionProps> = ({
   isOpen,
   setIsOpen,
   children,
+  className,
+  insideClassName,
+  bold,
 }) => {
   return (
-    <div className="border-b border-gray-200">
+    <div>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex justify-between items-center w-full py-4 text-left text-gray-700 focus:outline-none"
+        className={cn(
+          "flex justify-between items-center w-full py-4 text-left text-gray-700 focus:outline-none",
+          className
+        )}
       >
-        <span className="font-medium text-lg">{title}</span>
+        <span
+          className={cn("font-medium text-lg", bold ? "font-semibold" : "")}
+        >
+          {title}
+        </span>
         <svg
           className={`transform transition-transform duration-300 ${
             isOpen ? "rotate-180" : "rotate-0"
@@ -41,7 +55,9 @@ const Accordion: React.FC<AccordionProps> = ({
         animate={{ height: isOpen ? "auto" : 0 }}
         className="overflow-hidden"
       >
-        <div className="py-2 text-gray-600">{children}</div>
+        <div className={cn("py-2 text-gray-600", insideClassName)}>
+          {children}
+        </div>
       </motion.div>
     </div>
   );

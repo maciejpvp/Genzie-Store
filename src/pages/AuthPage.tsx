@@ -1,11 +1,10 @@
 import { Login } from "@/components/Auth/Login";
 import Signup from "@/components/Auth/Signup";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Logo } from "@/components/Navbar/Logo";
 import { useNavigate, useParams } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import { IoIosArrowRoundBack } from "react-icons/io";
 import { useEffect } from "react";
+import { Navbar2 } from "@/components/Navbar/Navbar2";
 
 export const AuthPage = () => {
   const navigate = useNavigate();
@@ -36,20 +35,7 @@ export const AuthPage = () => {
         }}
       />
       <div className="flex flex-col">
-        <div className="h-[10dvh] flex justify-center mt-1">
-          <button
-            className="w-1/3 text-6xl basis-1/3"
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            <IoIosArrowRoundBack />
-          </button>
-          <div className="w-1/3 flex flex-row justify-center">
-            <Logo />
-          </div>
-          <div className="w-1/3" />
-        </div>
+        <Navbar2 />
         <div className="flex justify-center items-center h-[65dvh]">
           <Tabs defaultValue={mode} className="w-[400px]">
             <TabsList className="grid w-full grid-cols-2">
