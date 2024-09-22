@@ -7,15 +7,20 @@ import {
   CartResponse,
 } from "./types";
 
-const token = localStorage.getItem("token") || "";
+// const token = localStorage.getItem("token") || "";
 
 const apiClient = axios.create({
   baseURL: "http://localhost:8000/api/v1/",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
   },
+});
+
+apiClient.interceptors.request.use(function (config) {
+  const token = localStorage.getItem("token") || undefined;
+  config.headers.Authorization = token ? `Bearer ${token}` : "";
+  return config;
 });
 
 export const getData = async <T>(

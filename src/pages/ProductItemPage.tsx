@@ -10,6 +10,7 @@ import Accordion from "@/components/ui/Accordion";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useAddToCart } from "@/hooks/useAddtoCart";
+import { BeatLoader } from "react-spinners";
 
 export const ProductItemPage = () => {
   const { id } = useParams();
@@ -25,7 +26,12 @@ export const ProductItemPage = () => {
     id: id ? id : "",
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading)
+    return (
+      <div className="flex justify-center h-dvh mt-48">
+        <BeatLoader />
+      </div>
+    );
   if (error || data?.code !== "017")
     return <p>An error occurred: {error?.message || data?.message}</p>;
 
