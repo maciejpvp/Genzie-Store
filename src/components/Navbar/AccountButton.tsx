@@ -22,6 +22,12 @@ export const AccountButton = () => {
     navigate("/auth/signup");
   };
 
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("tokenExpiresIn");
+    window.location.reload();
+  };
+
   return (
     <Popover>
       <PopoverTrigger>
@@ -65,7 +71,7 @@ export const AccountButton = () => {
                 Settings
               </button>
               <button
-                onClick={() => {}}
+                onClick={handleLogOut}
                 className="bg-gray-100 w-48 h-10 rounded-sm hover:bg-gray-200 transition-all duration-300 active:bg-gray-100"
               >
                 Log Out

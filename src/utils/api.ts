@@ -7,8 +7,6 @@ import {
   CartResponse,
 } from "./types";
 
-// const token = localStorage.getItem("token") || "";
-
 const apiClient = axios.create({
   baseURL: "http://localhost:8000/api/v1/",
   timeout: 10000,
