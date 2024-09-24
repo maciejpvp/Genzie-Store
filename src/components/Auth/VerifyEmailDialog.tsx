@@ -55,12 +55,14 @@ export const VerifyEmailDialog = ({
             console.log(error);
           },
           onSuccess: () => {
+            setOpen(false);
             navigate("/auth/login");
           },
         }
       );
     }
-  }, [otp, email, mutateVerifyEmail, navigate]);
+    //eslint-disable-next-line
+  }, [otp]);
 
   useEffect(() => {
     let timer: ReturnType<typeof setInterval>;

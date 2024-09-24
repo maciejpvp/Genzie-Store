@@ -26,7 +26,7 @@ const Signup: React.FC = () => {
     setError,
     setFocus,
   } = useForm<FormDataType>({
-    mode: "onChange",
+    mode: "onSubmit",
   });
 
   useEffect(() => {

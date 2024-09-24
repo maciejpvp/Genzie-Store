@@ -16,6 +16,7 @@ import { store } from "./store/store.ts";
 import { Provider } from "react-redux";
 import { Cart } from "./pages/Cart.tsx";
 import { AuthPage } from "./pages/AuthPage.tsx";
+import { ResetPassword } from "./components/ResetPassword.tsx";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
   {
     path: "/auth",
     element: <Navigate to="/auth/signup" replace />,
+  },
+  {
+    path: "/auth/resetPassword/:token",
+    element: <ResetPassword />,
   },
   {
     path: "/auth/:mode",

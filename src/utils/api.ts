@@ -132,3 +132,23 @@ export const deleteFromCart = async (
   const response = await apiClient.delete(`/cart/${id}`);
   return response.data;
 };
+
+export const forgotPassword = async (
+  email: string
+): Promise<DefaultResponseType> => {
+  const response = await apiClient.post("/users/forgotPassword", {
+    email,
+  });
+  return response.data;
+};
+
+export const resetPassword = async (
+  token: string,
+  password: string
+): Promise<DefaultResponseType> => {
+  const response = await apiClient.patch("/users/resetPassword", {
+    token,
+    password,
+  });
+  return response.data;
+};

@@ -9,6 +9,7 @@ import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { ForgotPasswordModal } from "./ForgotPasswordModal";
+import { VerifyEmailDialog } from "./VerifyEmailDialog";
 // import { DefaultResponseType } from "@/utils/types";
 
 const login = (token: string): void => {
@@ -26,14 +27,17 @@ export const Login: React.FC = () => {
     formState: { errors },
     setError,
     setFocus,
+    watch,
   } = useForm<FormDataType>({
-    mode: "onChange",
+    mode: "onSubmit",
   });
 
   const { mutate, isPending } = useLogin();
 
   const navigate = useNavigate();
   const [showForgetPasswordModal, setShowForgetPasswordModal] =
+    useState<boolean>(false);
+  const [showVerifyEmailModal, setShowVerifyEmailModal] =
     useState<boolean>(false);
 
   const isDisabled = !!Object.keys(errors).length || isPending;
@@ -61,6 +65,8 @@ export const Login: React.FC = () => {
                 type: "manual",
                 message: "Password is invalid",
               });
+            } else if (code === "007") {
+              setShowVerifyEmailModal(true);
             }
           }
         },
@@ -73,11 +79,23 @@ export const Login: React.FC = () => {
     );
   };
 
+  const handleShowForgetPasswordModal = () => {
+    console.log("123123123123123");
+    setShowForgetPasswordModal(true);
+  };
+
+  const email = watch("email");
+
   return (
     <>
       <ForgotPasswordModal
         open={showForgetPasswordModal}
         setOpen={setShowForgetPasswordModal}
+      />
+      <VerifyEmailDialog
+        open={showVerifyEmailModal}
+        setOpen={setShowVerifyEmailModal}
+        email={email}
       />
       <div className="h-[35dvh]">
         <Card className="max-w-md mx-auto">
@@ -119,7 +137,9 @@ export const Login: React.FC = () => {
               </div>
               <Button
                 variant="link"
-                onClick={() => setShowForgetPasswordModal((prev) => !prev)}
+                type="button"
+                onClick={handleShowForgetPasswordModal}
+                tabIndex={-2}
               >
                 Forgot password?
               </Button>

@@ -3,12 +3,22 @@ import Signup from "@/components/Auth/Signup";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNavigate, useParams } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Navbar2 } from "@/components/Navbar/Navbar2";
 
 export const AuthPage = () => {
   const navigate = useNavigate();
   const { mode } = useParams();
+
+  const [tab, setTab] = useState<string>(mode ? mode : "");
+
+  const onTabChange = (value: string) => {
+    setTab(value);
+  };
+
+  useEffect(() => {
+    setTab(mode ? mode : "");
+  }, [mode]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -37,7 +47,7 @@ export const AuthPage = () => {
       <div className="flex flex-col">
         <Navbar2 />
         <div className="flex justify-center items-center h-[65dvh]">
-          <Tabs defaultValue={mode} className="w-[400px]">
+          <Tabs value={tab} onValueChange={onTabChange} className="w-[400px]">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger
                 value="signup"

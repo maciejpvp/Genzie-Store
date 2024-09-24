@@ -6,10 +6,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import InputField from "./FormInput";
-import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 import { FormDataType } from "./Signup";
 import { Button } from "../ui/button";
+import { useForgotPassword } from "@/hooks/useForgotPassword";
+import SuccessAnimation from "../SuccessAnimation";
 
 type ForgotPasswordModalProps = {
   open: boolean;
@@ -26,8 +28,11 @@ export const ForgotPasswordModal = ({
     formState: { errors },
     setFocus,
   } = useForm<FormDataType>({
-    mode: "onChange",
+    mode: "onSubmit",
   });
+
+  const { mutate: mutateForgotPassword } = useForgotPassword();
+  const [success, setSuccess] = useState<boolean>(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -36,8 +41,17 @@ export const ForgotPasswordModal = ({
     //eslint-disable-next-line
   }, []);
 
-  const onSubmit = () => {
-    console.log("23");
+  const onSubmit: SubmitHandler<FormDataType> = (data) => {
+    mutateForgotPassword(
+      {
+        email: data.email,
+      },
+      {
+        onSuccess: () => {
+          setSuccess(true);
+        },
+      }
+    );
   };
 
   return (
@@ -45,31 +59,35 @@ export const ForgotPasswordModal = ({
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex justify-center">
-            Forgot Password
+            {!success ? "Forgot Password" : "Check your Inbox"}
           </DialogTitle>
           <DialogDescription className="flex justify-center">
-            Enter your email address
+            {!success ? "Enter your email address" : "Email sent successfully"}
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-2">
-            <InputField
-              label="Email"
-              id="email"
-              register={register}
-              errors={errors}
-              // disabled={isPending}
-              validation={{
-                required: "Email is required",
-                pattern: {
-                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                  message: "Please enter a valid email",
-                },
-              }}
-            />
-            <Button>Reset Password</Button>
-          </div>
-        </form>
+        {!success ? (
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="flex flex-col gap-2">
+              <InputField
+                label="Email"
+                id="email"
+                register={register}
+                errors={errors}
+                // disabled={isPending}
+                validation={{
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                    message: "Please enter a valid email",
+                  },
+                }}
+              />
+              <Button>Reset Password</Button>
+            </div>
+          </form>
+        ) : (
+          <SuccessAnimation />
+        )}
       </DialogContent>
     </Dialog>
   );
